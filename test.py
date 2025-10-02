@@ -279,7 +279,6 @@ def saveBet(a, b, c, d, e):
         return None
 
 
-
 def mainMenu():
     #add a bet
     print(f"{'Welcome to the main menu':-^60}")
@@ -301,11 +300,15 @@ def mainMenu():
     print(f"{betFormat}")
 
     betCompetitionLeague = validateCompetitionsLeagues(betType, betDiscipline, betFormat)
+    if betCompetitionLeague == None:
+        print("Bye bye")
+        return None
 
     print(f"{settings[betType]["Detalle"][betDiscipline][betFormat]}")
     betMarket = validateBetMarket(betType, betDiscipline)
-
+    if betMarket == None:
+        print("Bye bye")
+        return None
     saveBet(betType, betDiscipline, betFormat, betCompetitionLeague, betMarket)
     
-
 mainMenu()
