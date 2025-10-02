@@ -1,7 +1,32 @@
 {
-    "betType": "Sport",
-    "betDiscipline": "Basketball",
-    "betFormat": "Competitions",
-    "betCompetitionLeague": "EuroLeague",
-    "betMarket": "Over/Under"
+    "Firstbettest": {
+        "betType": "Sport",
+        "betDiscipline": "Basketball",
+        "betFormat": "Competitions",
+        "betCompetitionLeague": "NBA",
+        "betTeamPlayer": "Teams",
+        "betTeamPlayerOption": "Los Angeles Lakers",
+        "betMarket": "1X2",
+        "betTime": 1759422022.705195
+    },
+    "Segundabet": {
+        "betType": "Sport",
+        "betDiscipline": "Basketball",
+        "betFormat": "Competitions",
+        "betCompetitionLeague": "NBA",
+        "betTeamPlayer": "Teams",
+        "betTeamPlayerOption": "Real Madrid Basket",
+        "betMarket": "Handicap",
+        "betTime": "2025-10-02"
+    },
+    "Valocobet": {
+        "betType": "Esport",
+        "betDiscipline": "Valorant",
+        "betFormat": "Competitions",
+        "betCompetitionLeague": "VCT Masters",
+        "betTeamPlayer": "Teams",
+        "betTeamPlayerOption": "Sentinels",
+        "betMarket": "Match Winner",
+        "betTime": "2025-10-02"
+    }
 }
