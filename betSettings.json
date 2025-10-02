@@ -1,0 +1,99 @@
+{
+    "Sport": {
+        "Options": [
+            "Basketball",
+            "Football",
+            "Baseball"
+        ],
+        "Detalle": {
+            "Basketball": {
+                "Competitions": [
+                    "NBA",
+                    "EuroLeague"
+                ],
+                "Leagues": [
+                    "Liga ACB",
+                    "CBA"
+                ],
+                "Markets": [
+                    "1X2",
+                    "Over/Under",
+                    "Handicap",
+                    "Total Points"
+                ]
+            },
+            "Football": {
+                "Competitions": [
+                    "Champions League",
+                    "Copa Libertadores",
+                    "Copa Sudamericana"
+                ],
+                "Leagues": [
+                    "Premier League",
+                    "La Liga"
+                ],
+                "Markets": [
+                    "1X2",
+                    "Over 2.5 Goals",
+                    "Both Teams to Score",
+                    "Corners",
+                    "Double Chance"
+                ]
+            },
+            "Baseball": {
+                "Competitions": [],
+                "Leagues": [],
+                "Markets": [
+                    "Moneyline",
+                    "Total Runs",
+                    "Handicap"
+                ]
+            }
+        }
+    },
+    "Esport": {
+        "Options": [
+            "CSGO",
+            "Valorant"
+        ],
+        "Detalle": {
+            "CSGO": {
+                "Competitions": [
+                    "Blast Premier",
+                    "ESL Pro League"
+                ],
+                "Leagues": [],
+                "Markets": [
+                    "Match Winner",
+                    "Map Handicap",
+                    "Kills Over/Under",
+                    "First Blood"
+                ]
+            },
+            "Valorant": {
+                "Competitions": [
+                    "VCT Masters"
+                ],
+                "Leagues": [],
+                "Markets": [
+                    "Match Winner",
+                    "Rounds Handicap",
+                    "Over/Under Maps",
+                    "First Kill"
+                ]
+            }
+        }
+    },
+    "Politics": {
+        "Options": [
+            "Usa"
+        ],
+        "Detalle": {
+            "Usa": {
+                "Competitions": [],
+                "Leagues": [],
+                "Markets": []
+            }
+        }
+    }
+}
