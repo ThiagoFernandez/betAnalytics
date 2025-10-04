@@ -51,11 +51,36 @@ except json.JSONDecodeError:
 #print(settings["Sport"]["Detalle"]["Basketball"]["Competitions"])
 
 users = list(data.keys())
-for i, items in enumerate(users, start=1):
-    print(f"{i}. {items}")
-optionActiveUser = int(input("Choose an user: ")) - 1
-activeUser = users[optionActiveUser]
-
+if not users:
+    newUser = input("Write your UserName: ").title().strip()
+    activeUser = newUser
+    data[activeUser]={}
+    with open("./data.json", "w") as f:
+        json.dump(data, f, indent=4)
+else:
+    for i, items in enumerate(users, start=1):
+        print(f"{i}. {items}")
+    print(f"{len(users)+1}. Add")
+    while True:
+        try:
+            optionActiveUser = int(input("Choose an user: "))
+            if optionActiveUser == len(users)+1:
+                newUser = input("Write your UserName: ").title().strip()
+                if newUser not in users:
+                    activeUser = newUser
+                    data[activeUser]={}
+                    with open("./data.json", "w") as f:
+                        json.dump(data, f, indent=4)
+                    break
+                else:
+                    print(f"{newUser} is already an user")
+            elif optionActiveUser >len(users)+1 or optionActiveUser<=0:
+                print(f"The option must be between 1-{len(users)+1}\nTry again")
+            else:
+                activeUser = users[optionActiveUser]
+                break
+        except ValueError:
+            print("The option must be a number")
 
 
 #//////////MAKING A BET//////////////
@@ -393,37 +418,42 @@ def validateBetCuote():
         except ValueError:
             print("The cuote must be a number | Try again")
 
+#def validateBetProfit(a, b): proximo paso!
+
+
+
 def saveBet(a, b, c, d, e, f, g, h, i, j, k): #STEP 8
-    betName = input("Write a name for the bet: ").title().strip()
-    betNamesList = list(data[activeUser].keys())
-    if betName not in betNamesList:
-        currentTime = time.localtime()
-        formattedTime = time.strftime("%Y-%m-%d", currentTime)
-        data[activeUser][betName] = {
+    while True:
+        betName = input("Write a name for the bet: ").title().strip()
+        betNamesList = list(data[activeUser].keys())
+        if betName not in betNamesList:
+            currentTime = time.localtime()
+            formattedTime = time.strftime("%Y-%m-%d", currentTime)
+            data[activeUser][betName] = {
+                    "betType": a,
+                    "betDiscipline": b,
+                    "betFormat": c,
+                    "betCompetitionLeague": d,
+                    "betTeamPlayer": e,
+                    "betTeamPlayerOption": f,
+                    "betMarket": g,
+                    "betMarketResult": h,
+                    "betAmount": i,
+                    "betCuote": j,
+                    "betResult": k,
+                    "betTime": formattedTime
 
-                "betType": a,
-                "betDiscipline": b,
-                "betFormat": c,
-                "betCompetitionLeague": d,
-                "betTeamPlayer": e,
-                "betTeamPlayerOption": f,
-                "betMarket": g,
-                "betMarketResult": h,
-                "betAmount": i,
-                "betCuote": j,
-                "betResult": k,
-                "betTime": formattedTime
-
-            }
-        option=input(f"This is the result:\n{data[activeUser][betName]}\,Do you want to save it?\nyes or no: ").strip().lower()
-        if option == "yes":
-            with open("./data.json", "w") as f:
-                json.dump(data, f, indent=4)
-            print("Bet saved")
-            return None
+                }
+            option=input(f"This is the result:\n{data[activeUser][betName]}\nDo you want to save it?\nyes or no: ").strip().lower()
+            if option == "yes":
+                with open("./data.json", "w") as f:
+                    json.dump(data, f, indent=4)
+                print("Bet saved")
+                return None
+            else:
+                return None
         else:
-            return None
-
+            print(f"That name already exist\nTry again")
 
 def makeBet():
     #add a bet
@@ -478,13 +508,6 @@ def makeBet():
         print("Bye bye")
         return None
 
-    print(f"{'VALIDATE BET RESULT MENU':-^60}")
-    betResult = validateBetResult()
-    if betResult == None:
-        print("Bye bye")
-        return None
-
-
     print(f"{'VALIDATE BET AMOUNT MENU':-^60}")
     betAmount = validateBetAmount()
     if betAmount == None:
@@ -497,8 +520,15 @@ def makeBet():
         print("Bye bye")
         return None
 
+    print(f"{'VALIDATE BET RESULT MENU':-^60}")
+    betResult = validateBetResult()
+    if betResult == None:
+        print("Bye bye")
+        return None
+
+
     print(f"{'VALIDATE THE BET MENU':-^60}")
-    saveBet(betType, betDiscipline, betFormat, betCompetitionLeague,betTeamPlayer ,betTeamPlayerListOption, betMarket, betMarketResult, betAmount, betCuote, betResult)
+    saveBet(betType, betDiscipline, betFormat, betCompetitionLeague, betTeamPlayer ,betTeamPlayerListOption, betMarket, betMarketResult, betAmount, betCuote, betResult)
 
 
 
@@ -512,15 +542,18 @@ def mainMenu(au):
         print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. EXIT")
         try:
             menuOption = int(input("Choose between 1-n: "))
-            match menuOption:
-                case 1:
-                    print("You have selected the option 1 | MAKE A BET")
-                    makeBet()
-                case 2:
-                    print("You have selected the option 2 | CHANGE BET RESULT")
-                case 3:
-                    print("CLOSING...")
-                    return None
+            if menuOption >0 or menuOption <4:
+                match menuOption:
+                    case 1:
+                        print("You have selected the option 1 | MAKE A BET")
+                        makeBet()
+                    case 2:
+                        print("You have selected the option 2 | CHANGE BET RESULT")
+                    case 3:
+                        print("CLOSING...")
+                        return None
+            else:
+                print(f"The option must be between 1 - n\nTry again")
         except ValueError:
             print(f"The option must be a number\nTry again")
 

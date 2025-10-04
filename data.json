@@ -1,40 +1,5 @@
 {
     "Thiago": {
-        "Simplegoatbet": {
-            "betType": "Esport",
-            "betDiscipline": "CSGO",
-            "betFormat": "Competitions",
-            "betCompetitionLeague": "Blast Premier",
-            "betTeamPlayer": "Players",
-            "betTeamPlayerOption": "s1mple",
-            "betMarket": "Most Kills",
-            "betMarketResult": "most kills in the first match",
-            "betResult": "Win",
-            "betTime": "2025-10-03"
-        },
-        "Papuprueba": {
-            "betType": "Papu",
-            "betDiscipline": "Papudisciplina",
-            "betFormat": "Competitions",
-            "betCompetitionLeague": "Papucompeticion",
-            "betTeamPlayer": "Teams",
-            "betTeamPlayerOption": "Paputeam",
-            "betMarket": "Papu1X2",
-            "betMarketResult": "gana el papu",
-            "betTime": "2025-10-03"
-        },
-        "Primeraconestenuevodata": {
-            "betType": "Sport",
-            "betDiscipline": "Basketball",
-            "betFormat": "Competitions",
-            "betCompetitionLeague": "NBA",
-            "betTeamPlayer": "Teams",
-            "betTeamPlayerOption": "Los Angeles Lakers",
-            "betMarket": "1X2",
-            "betMarketResult": "Lakers",
-            "betResult": "Win",
-            "betTime": "2025-10-03"
-        },
         "Nuevoformatojijo": {
             "betType": "Esport",
             "betDiscipline": "Valorant",
@@ -48,6 +13,20 @@
             "betCuote": 1.7,
             "betResult": "Win",
             "betTime": "2025-10-03"
+        },
+        "Probandoprobando": {
+            "betType": "Esport",
+            "betDiscipline": "Valorant",
+            "betFormat": "Competitions",
+            "betCompetitionLeague": "VCT Masters",
+            "betTeamPlayer": "Players",
+            "betTeamPlayerOption": "Derke",
+            "betMarket": "MVP of Match",
+            "betMarketResult": "2mapas",
+            "betAmount": 5000.0,
+            "betCuote": 2.1,
+            "betResult": "Win",
+            "betTime": "2025-10-04"
         }
     }
 }
