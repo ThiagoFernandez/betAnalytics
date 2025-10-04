@@ -425,7 +425,7 @@ def saveBet(a, b, c, d, e, f, g, h, i, j, k): #STEP 8
             return None
 
 
-def mainMenu():
+def makeBet():
     #add a bet
     print(f"{'Welcome to the main menu':-^60}")
 
@@ -499,5 +499,29 @@ def mainMenu():
 
     print(f"{'VALIDATE THE BET MENU':-^60}")
     saveBet(betType, betDiscipline, betFormat, betCompetitionLeague,betTeamPlayer ,betTeamPlayerListOption, betMarket, betMarketResult, betAmount, betCuote, betResult)
-    
-mainMenu()
+
+
+
+
+
+
+def mainMenu(au):
+    print(f"Welcome {au}")
+    print(f"{'BET ANALYTICS MENU':-^60}")
+    while True:
+        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. EXIT")
+        try:
+            menuOption = int(input("Choose between 1-n: "))
+            match menuOption:
+                case 1:
+                    print("You have selected the option 1 | MAKE A BET")
+                    makeBet()
+                case 2:
+                    print("You have selected the option 2 | CHANGE BET RESULT")
+                case 3:
+                    print("CLOSING...")
+                    return None
+        except ValueError:
+            print(f"The option must be a number\nTry again")
+
+mainMenu(activeUser)
