@@ -77,7 +77,7 @@ else:
             elif optionActiveUser >len(users)+1 or optionActiveUser<=0:
                 print(f"The option must be between 1-{len(users)+1}\nTry again")
             else:
-                activeUser = users[optionActiveUser]
+                activeUser = users[optionActiveUser-1]
                 break
         except ValueError:
             print("The option must be a number")
@@ -151,7 +151,7 @@ def validateBetDiscipline(a):#STEP2
                     hasCompetitionsLeagues = input(f"Has {newOption} competitions and leagues?\nyes or no: ").strip().lower()
                     while True:
                         if hasCompetitionsLeagues == "yes":
-                            settings[a]["Detalle"][newOption] = {"Competitions": [], "Leagues": [], "TeamsPlayers": {"Teams": {"List":[], "Markets":[]}, "Players":{"List": [], "Markets": []}}} 
+                            settings[a]["Detalle"][newOption] = {"Competitions": {}, "Leagues":{}} 
                             break
                         elif hasCompetitionsLeagues == "no":
                             settings[a]["Detalle"][newOption] = {"TeamsPlayers": {"Teams": {"List": [], "Markets": []}, "Players": {"List": [], "Markets": []}}}
@@ -178,7 +178,7 @@ def validateBetDiscipline(a):#STEP2
                     if newDiscipline not in settings[a]["Options"]:
                         lista.append(newDiscipline)
                         settings[a]["Options"] = lista
-                        settings[a]["Detalle"][newDiscipline] = {"Competitions": [], "Leagues": [], "TeamsPlayers": {"Teams": {"List":[], "Markets":[]}, "Players": {"List": [], "Markets": []}}}
+                        settings[a]["Detalle"][newDiscipline] = {"Competitions": {}, "Leagues":{}}
                         with open("./betSettings.json", "w") as f:
                             json.dump(settings, f, indent=4)
                         return settings[a]["Options"][-1]
@@ -218,9 +218,9 @@ def validateBetFormat(a, b):#STEP 3
                     print("The option must be between 1-2 | Try again")
             except ValueError:
                 print("The option must be a number | Try again")
-    for i, items in enumerate(lista[:-1], start=1):
+    for i, items in enumerate(lista, start=1):
         print(f"{i}. {items}")
-    print(f"{len(lista[:-1])+1}. Exit")
+    print(f"{len(lista)+1}. Exit")
 
     while True:
         try:
@@ -236,7 +236,7 @@ def validateBetFormat(a, b):#STEP 3
 
 
 def validateCompetitionsLeagues(a, b, c): #STEP 4
-    lista = settings[a]["Detalle"][b][c]
+    lista = list(settings[a]["Detalle"][b][c].keys())
     if not lista:
         print(f"1. Add\n2. Exit")
         while True:
@@ -244,10 +244,10 @@ def validateCompetitionsLeagues(a, b, c): #STEP 4
                 option = int(input("Choose an option between 1-2: "))
                 if option ==1:
                     newOption=input("Write the new option: ").title().strip()
-                    lista.append(newOption)
-                    settings[a]["Detalle"][b][c] = lista
+                    settings[a]["Detalle"][b][c][newOption]= {"TeamsPlayers": {"Teams": {"List":[], "Markets":[]}, "Players": {"List":[], "Markets":[]}}}
                     with open("./betSettings.json", "w") as f:
                         json.dump(settings, f, indent=4)
+                    lista.append(newOption)
                     return lista[-1]
                 elif option == 2:
                     return None
@@ -266,10 +266,11 @@ def validateCompetitionsLeagues(a, b, c): #STEP 4
                     if competitionLeagueOption == len(lista)+1:
                         newOption = input("Write the new option: ").title().strip()
                         if newOption not in lista:
-                            lista.append(newOption)
-                            settings[a]["Detalle"][b][c] = lista
+                            newOption=input("Write the new option: ").title().strip()
+                            settings[a]["Detalle"][b][c][newOption]= {"TeamsPlayers": {"Teams": {"List":[], "Markets":[]}, "Players": {"List":[], "Markets":[]}}}
                             with open ("./betSettings.json", "w") as f:
                                 json.dump(settings, f, indent=4)
+                            lista.append(newOption)
                             return lista[-1]
                         else:
                             print(f"{newOption} is already an option")
@@ -383,7 +384,29 @@ def validateBetMarket(a, b, c): #STEP 7
         except ValueError:
             print("The option must be a number | Try again")
 
-def validateBetResult():
+
+def validateBetAmount(): #STEP 8
+    while True:
+        try:
+            amount = float(input("Write the bet amount: "))
+            return amount
+        except ValueError:
+            print("The amount must be a number | Try again ")
+
+def validateBetCuote(): #STEP 9
+    while True:
+        try:
+            cuote = float(input("Write the cuote: "))
+            if cuote <1:
+                print(f"The cuote can not be less than 1")
+            elif cuote ==1:
+                print(f"The cuote can not be equal 1")
+            else:
+                return cuote
+        except ValueError:
+            print("The cuote must be a number | Try again")
+
+def validateBetResult(): #STEP 10
     lista = ["Win", "Loss", "CashOut", "Cancelled", "To Be Defined"]
     for i, items in enumerate(lista, start=1):
         print(f"{i}. {items}")
@@ -397,32 +420,35 @@ def validateBetResult():
         except ValueError:
             print("The option must be a number | Try again")
 
-def validateBetAmount():
-    while True:
-        try:
-            amount = float(input("Write the bet amount: "))
-            return amount
-        except ValueError:
-            print("The amount must be a number | Try again ")
+def validateBetProfit(a, c, r): #STEP 11
+    if r == "Win":
+        profit = a * c
+        return profit
+    elif r == "Loss":
+        profit = 0
+        return profit
+    elif r == "To Be Defined":
+        profit = "TBD"
+        return profit
+    elif r == "Cancelled":
+        profit = "bet cancelled"
+        return profit
+    else:
+        while True:
+            try:
+                limit = a * c
+                amountCashed = int(input("Write the amount cashed: "))
+                if amountCashed > limit or amountCashed <0:
+                    print(f"The amount cashed cannot be less than 0 or higher than {profit}\nTry again")
+                else:
+                    profit = amountCashed - a
+                    return profit
+            except ValueError:
+                print(f"The amount cashed must be a number\nTry again")
 
-def validateBetCuote():
-    while True:
-        try:
-            cuote = float(input("Write the cuote: "))
-            if cuote <1:
-                print(f"The cuote can not be less than 1")
-            elif cuote ==1:
-                print(f"The cuote can not be equal 1")
-            else:
-                return cuote
-        except ValueError:
-            print("The cuote must be a number | Try again")
-
-#def validateBetProfit(a, b): proximo paso!
 
 
-
-def saveBet(a, b, c, d, e, f, g, h, i, j, k): #STEP 8
+def saveBet(a, b, c, d, e, f, g, h, i, j, k, l): #STEP 12
     while True:
         betName = input("Write a name for the bet: ").title().strip()
         betNamesList = list(data[activeUser].keys())
@@ -441,6 +467,7 @@ def saveBet(a, b, c, d, e, f, g, h, i, j, k): #STEP 8
                     "betAmount": i,
                     "betCuote": j,
                     "betResult": k,
+                    "betProfit": l,
                     "betTime": formattedTime
 
                 }
@@ -455,7 +482,9 @@ def saveBet(a, b, c, d, e, f, g, h, i, j, k): #STEP 8
         else:
             print(f"That name already exist\nTry again")
 
-def makeBet():
+#/////////////////////////////////////////
+#MAIN OPTIONS
+def makeBet(): #OPTION 1
     #add a bet
     print(f"{'Welcome to the main menu':-^60}")
 
@@ -525,16 +554,53 @@ def makeBet():
     if betResult == None:
         print("Bye bye")
         return None
+    
+    print(f"{'VALIDATE BET PROFIT MENU':-^60}")
+    betProfit = validateBetProfit(betAmount, betCuote, betResult)
+    
 
 
     print(f"{'VALIDATE THE BET MENU':-^60}")
-    saveBet(betType, betDiscipline, betFormat, betCompetitionLeague, betTeamPlayer ,betTeamPlayerListOption, betMarket, betMarketResult, betAmount, betCuote, betResult)
+    saveBet(betType, betDiscipline, betFormat, betCompetitionLeague, betTeamPlayer ,betTeamPlayerListOption, betMarket, betMarketResult, betAmount, betCuote, betResult, betProfit)
 
 
+def changeBetResult(a):
+    lista = list(data[a].keys())
+    if not lista:
+        print("You did not make any bet yet")
+        return None
+    for i, items in enumerate(lista, start=1):
+        print(f"{i}. {items}")
+    print(f"{len(lista)+1}. Exit")
 
+    while True:
+        try:
+            option = int(input("Choose an option: "))
+            betName = lista[option-1]
+            # la sigo despues, me quede sin bateria
+            newResult = validateBetResult()
+            data[a][betName]["betResult"] = newResult
+            if data[a][betName]["betResult"] == "Win":
+                data[a][betName]["betProfit"]= validateBetProfit(data[a][betName]["betAmount"], data[a][betName]["betCuote"], data[a][betName]["betResult"])
+            print(f"Bet after the change:\n{data[a][betName]}")
+            while True:
+                try:
+                    yesno = input(f"Do you want to save it?\nyes or no: ").strip().lower() 
+                    if yesno == "yes":
+                        with open("./data.json", "w") as f:
+                            json.dump(data, f, indent=4)
+                        return None
+                    else:
+                        return None
+                except KeyError:
+                    print("Error, try again")   
+            
 
+        except ValueError:
+            print(f"The option must be a number\nTry again")
 
-
+#/////////////////////////////
+#MAIN MENU
 def mainMenu(au):
     print(f"Welcome {au}")
     print(f"{'BET ANALYTICS MENU':-^60}")
@@ -549,6 +615,7 @@ def mainMenu(au):
                         makeBet()
                     case 2:
                         print("You have selected the option 2 | CHANGE BET RESULT")
+                        changeBetResult(activeUser)
                     case 3:
                         print("CLOSING...")
                         return None
