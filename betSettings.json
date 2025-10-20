@@ -1,282 +1,287 @@
 {
-  "Sport": {
-    "Options": [
-      "Basketball",
-      "Football",
-      "Baseball",
-      "Tennis"
-    ],
-    "Detalle": {
-      "Basketball": {
-        "Competitions": {
-          "NBA": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
+    "Sport": {
+        "Options": [
+            "Basketball",
+            "Football",
+            "Baseball",
+            "Tennis"
+        ],
+        "Detalle": {
+            "Basketball": {
+                "Competitions": {
+                    "NBA": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [
+                                    "Lakers",
+                                    "Wgs"
+                                ],
+                                "Markets": [
+                                    "1X2"
+                                ]
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    },
+                    "EuroLeague": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                },
+                "Leagues": {
+                    "League ACB": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    },
+                    "CBA": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                }
+            },
+            "Football": {
+                "Competitions": {
+                    "Champions League": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    },
+                    "Copa Libertadores": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                },
+                "Leagues": {
+                    "Premier League": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    },
+                    "La Liga": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                }
+            },
+            "Baseball": {
+                "Competitions": {
+                    "MLB": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                },
+                "Leagues": {
+                    "American League": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    },
+                    "National League": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                }
+            },
+            "Tennis": {
+                "Competitions": {
+                    "Wimbledon": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    },
+                    "US Open": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                },
+                "Leagues": {}
             }
-          },
-          "EuroLeague": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
-        },
-        "Leagues": {
-          "League ACB": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          },
-          "CBA": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
         }
-      },
-      "Football": {
-        "Competitions": {
-          "Champions League": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
+    },
+    "Esport": {
+        "Options": [
+            "CSGO",
+            "Valorant"
+        ],
+        "Detalle": {
+            "CSGO": {
+                "Competitions": {
+                    "Blast Premier": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    },
+                    "ESL Pro League": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                },
+                "Leagues": {}
+            },
+            "Valorant": {
+                "Competitions": {
+                    "VCT Masters": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                },
+                "Leagues": {
+                    "Liga Argentina de Valorant": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                }
             }
-          },
-          "Copa Libertadores": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
-        },
-        "Leagues": {
-          "Premier League": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          },
-          "La Liga": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
         }
-      },
-      "Baseball": {
-        "Competitions": {
-          "MLB": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
+    },
+    "Politics": {
+        "Options": [
+            "USA"
+        ],
+        "Detalle": {
+            "USA": {
+                "Competitions": {
+                    "Presidential Election": {
+                        "TeamsPlayers": {
+                            "Teams": {
+                                "List": [],
+                                "Markets": []
+                            },
+                            "Players": {
+                                "List": [],
+                                "Markets": []
+                            }
+                        }
+                    }
+                },
+                "Leagues": {}
             }
-          }
-        },
-        "Leagues": {
-          "American League": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          },
-          "National League": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
         }
-      },
-      "Tennis": {
-        "Competitions": {
-          "Wimbledon": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          },
-          "US Open": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
-        },
-        "Leagues": {}
-      }
     }
-  },
-  "Esport": {
-    "Options": [
-      "CSGO",
-      "Valorant"
-    ],
-    "Detalle": {
-      "CSGO": {
-        "Competitions": {
-          "Blast Premier": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          },
-          "ESL Pro League": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
-        },
-        "Leagues": {}
-      },
-      "Valorant": {
-        "Competitions": {
-          "VCT Masters": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
-        },
-        "Leagues": {
-          "Liga Argentina de Valorant": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "Politics": {
-    "Options": [
-      "USA"
-    ],
-    "Detalle": {
-      "USA": {
-        "Competitions": {
-          "Presidential Election": {
-            "TeamsPlayers": {
-              "Teams": {
-                "List": [],
-                "Markets": []
-              },
-              "Players": {
-                "List": [],
-                "Markets": []
-              }
-            }
-          }
-        },
-        "Leagues": {}
-      }
-    }
-  }
 }

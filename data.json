@@ -43,6 +43,21 @@
             "betResult": "Win",
             "betProfit": 4500.0,
             "betTime": "2025-10-04"
+        },
+        "Probandonuevo Formato Jijo": {
+            "betType": "Sport",
+            "betDiscipline": "Basketball",
+            "betFormat": "Competitions",
+            "betCompetitionLeague": "NBA",
+            "betTeamPlayer": "Teams",
+            "betTeamPlayerOption": "Wgs",
+            "betMarket": "1X2",
+            "betMarketResult": "Lakers",
+            "betAmount": 5000.0,
+            "betCuote": 10.0,
+            "betResult": "Loss",
+            "betProfit": 50000.0,
+            "betTime": "2025-10-20"
         }
     },
     "Mariano": {

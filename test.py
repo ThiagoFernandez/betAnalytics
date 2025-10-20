@@ -287,8 +287,8 @@ def validateCompetitionsLeagues(a, b, c): #STEP 4
                 print("The option must be a number | Try again")
 
 
-def validateTeamPlayerBet(a, b): #STEP 5
-    lista = list(settings[a]["Detalle"][b]["TeamsPlayers"].keys())
+def validateTeamPlayerBet(a, b, c, d): #STEP 5
+    lista = list(settings[a]["Detalle"][b][c][d]["TeamsPlayers"].keys())
     print("The bet is for a Team or for a Player?")
     for i, items in enumerate(lista, start=1):
         print(f"{i}. {items}")
@@ -303,8 +303,8 @@ def validateTeamPlayerBet(a, b): #STEP 5
         except ValueError:
             print("The option must be a number | Try again")
 
-def validateTeamPlayerList(a, b, c): #STEP 6
-    lista = settings[a]["Detalle"][b]["TeamsPlayers"][c]["List"]
+def validateTeamPlayerList(a, b, c, d, e): #STEP 6
+    lista = settings[a]["Detalle"][b][c][d]["TeamsPlayers"][e]["List"]
     for i, items in enumerate(lista, start=1):
         print(f"{i}. {items}")
     print(f"{len(lista)+1}. Add\n{len(lista)+2}. Exit")
@@ -317,7 +317,7 @@ def validateTeamPlayerList(a, b, c): #STEP 6
                     newOption = input("Write the new option: ").title().strip()
                     if newOption not in lista:
                         lista.append(newOption)
-                        settings[a]["Detalle"][b]["TeamsPlayers"][c]["List"] = lista
+                        settings[a]["Detalle"][b][c][d]["TeamsPlayers"][e]["List"] = lista
                         with open("./betSettings.json", "w") as f:
                             json.dump(settings, f, indent=4)
                         return lista[-1]
@@ -335,8 +335,8 @@ def validateTeamPlayerList(a, b, c): #STEP 6
             print("The option must be a number | Try again")
 
 
-def validateBetMarket(a, b, c): #STEP 7
-    lista = settings[a]["Detalle"][b]["TeamsPlayers"][c]["Markets"]
+def validateBetMarket(a, b, c, d, e): #STEP 7
+    lista = settings[a]["Detalle"][b][c][d]["TeamsPlayers"][e]["Markets"]
     if not lista:
         print("1. Add\n2. Exit")
         while True:
@@ -345,7 +345,7 @@ def validateBetMarket(a, b, c): #STEP 7
                 if option == 1:
                     newOption = input("Write the new market: ").title().strip()
                     lista.append(newOption)
-                    settings[a]["Detalle"][b]["TeamsPlayers"][c]["Markets"] = lista
+                    settings[a]["Detalle"][b][c][d]["TeamsPlayers"][e]["Markets"] = lista
                     with open("./betSettings.json", "w") as f:
                         json.dump(settings, f, indent=4)
                     return newOption
@@ -367,7 +367,7 @@ def validateBetMarket(a, b, c): #STEP 7
                     newOption = input("Write the new option: ").title().strip()
                     if newOption not in lista:
                         lista.append(newOption)
-                        settings[a]["Detalle"][b]["TeamsPlayers"][c]["Markets"] = lista
+                        settings[a]["Detalle"][b][c][d]["TeamsPlayers"][e]["Markets"] = lista
                         with open("./betSettings.json", "w") as f:
                             json.dump(settings, f, indent=4)
                         return lista[-1]
@@ -514,19 +514,19 @@ def makeBet(): #OPTION 1
         return None
 
     print(f"{'VALIDATE BET TEAM/PLAYER MENU':-^60}")
-    betTeamPlayer = validateTeamPlayerBet(betType, betDiscipline)#STEP5
+    betTeamPlayer = validateTeamPlayerBet(betType, betDiscipline, betFormat, betCompetitionLeague)#STEP5
     if betTeamPlayer == None:
         print("Bye bye")
         return None
     
     print(f"{'VALIDATE BET TEAM/PLAYER LIST OPTION MENU':-^60}")
-    betTeamPlayerListOption = validateTeamPlayerList(betType, betDiscipline, betTeamPlayer)#STEP6
+    betTeamPlayerListOption = validateTeamPlayerList(betType, betDiscipline, betFormat, betCompetitionLeague, betTeamPlayer)#STEP6
     if betTeamPlayerListOption == None:
         print("Bye bye")
         return None
     
     print(f"{'VALIDATE BET MARKET MENU':-^60}")
-    betMarket = validateBetMarket(betType, betDiscipline, betTeamPlayer) #STEP7
+    betMarket = validateBetMarket(betType, betDiscipline, betFormat, betCompetitionLeague, betTeamPlayer) #STEP7
     if betMarket == None:
         print("Bye bye")
         return None
