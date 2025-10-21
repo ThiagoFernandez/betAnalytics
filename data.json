@@ -1,81 +1,111 @@
 {
     "Thiago": {
-        "Nuevoformatojijo": {
-            "betType": "Esport",
-            "betDiscipline": "Valorant",
-            "betFormat": "Leagues",
-            "betCompetitionLeague": "Ligaargentinadevaloco",
-            "betTeamPlayer": "Players",
-            "betTeamPlayerOption": "Argennigger",
-            "betMarket": "First Blood",
-            "betMarketResult": "en 4 rondas",
+        "wallet": 100000.0,
+        "bets": {
+            "Nuevoformatojijo": {
+                "betType": "Esport",
+                "betDiscipline": "Valorant",
+                "betFormat": "Leagues",
+                "betCompetitionLeague": "Ligaargentinadevaloco",
+                "betTeamPlayer": "Players",
+                "betTeamPlayerOption": "Argennigger",
+                "betMarket": "First Blood",
+                "betMarketResult": "en 4 rondas",
+                "betAmount": 5000.0,
+                "betCuote": 1.7,
+                "betResult": "Loss",
+                "betTime": "2025-10-03",
+                "betProfit": 8500.0
+            },
+            "Probandoprobando": {
+                "betType": "Esport",
+                "betDiscipline": "Valorant",
+                "betFormat": "Competitions",
+                "betCompetitionLeague": "VCT Masters",
+                "betTeamPlayer": "Players",
+                "betTeamPlayerOption": "Derke",
+                "betMarket": "MVP of Match",
+                "betMarketResult": "2mapas",
+                "betAmount": 5000.0,
+                "betCuote": 2.1,
+                "betResult": "Win",
+                "betTime": "2025-10-04"
+            },
+            "Probandoprofit": {
+                "betType": "Esport",
+                "betDiscipline": "CSGO",
+                "betFormat": "Competitions",
+                "betCompetitionLeague": "Blast Premier",
+                "betTeamPlayer": "Teams",
+                "betTeamPlayerOption": "G2 Esports",
+                "betMarket": "Map Handicap",
+                "betMarketResult": "4 rondas",
+                "betAmount": 2500.0,
+                "betCuote": 1.8,
+                "betResult": "Loss",
+                "betProfit": 4500.0,
+                "betTime": "2025-10-04"
+            },
+            "Probandonuevo Formato Jijo": {
+                "betType": "Sport",
+                "betDiscipline": "Basketball",
+                "betFormat": "Competitions",
+                "betCompetitionLeague": "NBA",
+                "betTeamPlayer": "Teams",
+                "betTeamPlayerOption": "Wgs",
+                "betMarket": "1X2",
+                "betMarketResult": "Lakers",
+                "betAmount": 5000.0,
+                "betCuote": 10.0,
+                "betResult": "Loss",
+                "betProfit": 50000.0,
+                "betTime": "2025-10-20"
+            },
+            "Betdevalococontenz": {
+                "betType": "Esport",
+                "betDiscipline": "Valorant",
+                "betFormat": "Competitions",
+                "betCompetitionLeague": "VCT Masters",
+                "betTeamPlayer": "Players",
+                "betTeamPlayerOption": "TenZ",
+                "betMarket": "MVP of Match",
+                "betMarketResult": "yes",
+                "betAmount": 10000.0,
+                "betCuote": 1.6,
+                "betResult": "To Be Defined",
+                "betProfit": "TBD",
+                "betTime": "2025-10-20"
+            }
+        },
+        "Probandorealmadrid": {
+            "betType": "Sport",
+            "betDiscipline": "Football",
+            "betFormat": "Competitions",
+            "betCompetitionLeague": "Champions League",
+            "betTeamPlayer": "Teams",
+            "betTeamPlayerOption": "Real Madrid",
+            "betMarket": "1X2",
+            "betMarketResult": "Gana real madrid",
             "betAmount": 5000.0,
             "betCuote": 1.7,
             "betResult": "Win",
-            "betTime": "2025-10-03",
-            "betProfit": 8500.0
+            "betProfit": 8500.0,
+            "betTime": "2025-10-21"
         },
-        "Probandoprobando": {
-            "betType": "Esport",
-            "betDiscipline": "Valorant",
-            "betFormat": "Competitions",
-            "betCompetitionLeague": "VCT Masters",
-            "betTeamPlayer": "Players",
-            "betTeamPlayerOption": "Derke",
-            "betMarket": "MVP of Match",
-            "betMarketResult": "2mapas",
-            "betAmount": 5000.0,
-            "betCuote": 2.1,
-            "betResult": "Win",
-            "betTime": "2025-10-04"
-        },
-        "Probandoprofit": {
-            "betType": "Esport",
-            "betDiscipline": "CSGO",
-            "betFormat": "Competitions",
-            "betCompetitionLeague": "Blast Premier",
-            "betTeamPlayer": "Teams",
-            "betTeamPlayerOption": "G2 Esports",
-            "betMarket": "Map Handicap",
-            "betMarketResult": "4 rondas",
-            "betAmount": 2500.0,
-            "betCuote": 1.8,
-            "betResult": "Win",
-            "betProfit": 4500.0,
-            "betTime": "2025-10-04"
-        },
-        "Probandonuevo Formato Jijo": {
-            "betType": "Sport",
-            "betDiscipline": "Basketball",
-            "betFormat": "Competitions",
-            "betCompetitionLeague": "NBA",
-            "betTeamPlayer": "Teams",
-            "betTeamPlayerOption": "Wgs",
-            "betMarket": "1X2",
-            "betMarketResult": "Lakers",
-            "betAmount": 5000.0,
-            "betCuote": 10.0,
-            "betResult": "Loss",
-            "betProfit": 50000.0,
-            "betTime": "2025-10-20"
-        }
-    },
-    "Mariano": {
-        "Probandoconloslakers": {
+        "Probandowallet": {
             "betType": "Sport",
             "betDiscipline": "Basketball",
             "betFormat": "Competitions",
             "betCompetitionLeague": "NBA",
             "betTeamPlayer": "Teams",
             "betTeamPlayerOption": "Los Angeles Lakers",
-            "betMarket": "Over/Under Total Points",
-            "betMarketResult": "over 98.5",
-            "betAmount": 5000.0,
-            "betCuote": 2.1,
-            "betResult": "Win",
-            "betProfit": 10500.0,
-            "betTime": "2025-10-04"
+            "betMarket": "Match Winner",
+            "betMarketResult": "Lakers",
+            "betAmount": 24123.0,
+            "betCuote": 2.0,
+            "betResult": "Loss",
+            "betProfit": 0,
+            "betTime": "2025-10-21"
         }
-    },
-    "Kronos": {}
+    }
 }

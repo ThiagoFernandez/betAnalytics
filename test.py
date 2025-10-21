@@ -420,12 +420,14 @@ def validateBetResult(): #STEP 10
         except ValueError:
             print("The option must be a number | Try again")
 
-def validateBetProfit(a, c, r): #STEP 11
+def validateBetProfit(a, c, r, au): #STEP 11
     if r == "Win":
         profit = a * c
+        data[au]["wallet"] += profit - a
         return profit
     elif r == "Loss":
         profit = 0
+        data[au]["wallet"]-= a
         return profit
     elif r == "To Be Defined":
         profit = "TBD"
@@ -484,7 +486,7 @@ def saveBet(a, b, c, d, e, f, g, h, i, j, k, l): #STEP 12
 
 #/////////////////////////////////////////
 #MAIN OPTIONS
-def makeBet(): #OPTION 1
+def makeBet(au): #OPTION 1
     #add a bet
     print(f"{'Welcome to the main menu':-^60}")
 
@@ -556,7 +558,7 @@ def makeBet(): #OPTION 1
         return None
     
     print(f"{'VALIDATE BET PROFIT MENU':-^60}")
-    betProfit = validateBetProfit(betAmount, betCuote, betResult)
+    betProfit = validateBetProfit(betAmount, betCuote, betResult, au)
     
 
 
@@ -565,7 +567,7 @@ def makeBet(): #OPTION 1
 
 
 def changeBetResult(a):
-    lista = list(data[a].keys())
+    lista = list(data[a]["bets"].keys())
     if not lista:
         print("You did not make any bet yet")
         return None
@@ -576,28 +578,58 @@ def changeBetResult(a):
     while True:
         try:
             option = int(input("Choose an option: "))
-            betName = lista[option-1]
-            # la sigo despues, me quede sin bateria
-            newResult = validateBetResult()
-            data[a][betName]["betResult"] = newResult
-            if data[a][betName]["betResult"] == "Win":
-                data[a][betName]["betProfit"]= validateBetProfit(data[a][betName]["betAmount"], data[a][betName]["betCuote"], data[a][betName]["betResult"])
-            print(f"Bet after the change:\n{data[a][betName]}")
-            while True:
-                try:
-                    yesno = input(f"Do you want to save it?\nyes or no: ").strip().lower() 
-                    if yesno == "yes":
-                        with open("./data.json", "w") as f:
-                            json.dump(data, f, indent=4)
-                        return None
-                    else:
-                        return None
-                except KeyError:
-                    print("Error, try again")   
-            
-
+            if option == len(lista)+1:
+                return None
+            else:
+                betName = lista[option-1]
+                # la sigo despues, me quede sin bateria
+                newResult = validateBetResult()
+                data[a]["bets"][betName]["betResult"] = newResult
+                if data[a]["bets"][betName]["betResult"] == "Win":
+                    data[a]["bets"][betName]["betProfit"]= validateBetProfit(data[a]["bets"][betName]["betAmount"], data[a]["bets"][betName]["betCuote"], data[a]["bets"][betName]["betResult"])
+                print(f"Bet after the change:\n{data[a]["bets"][betName]}")
+                while True:
+                    try:
+                        yesno = input(f"Do you want to save it?\nyes or no: ").strip().lower() 
+                        if yesno == "yes":
+                            with open("./data.json", "w") as f:
+                                json.dump(data, f, indent=4)
+                            return None
+                        else:
+                            return None
+                    except KeyError:
+                        print("Error, try again")   
         except ValueError:
             print(f"The option must be a number\nTry again")
+
+def displayWallet(au):
+    print(f"User: {au} - Money Available: {data[au]["wallet"]}")
+    return None
+
+def walletMenu(au):
+    print(f"{'WALLET MENU':-^60}")
+    while True:
+        print(f"1. SEE YOUR WALLET\n2. Add money\n3. Withdraw money\n4. Exit")
+        try:
+            menuOption = int(input("Choose between 1-n: "))
+            if menuOption >0 or menuOption <4:
+                match menuOption:
+                    case 1:
+                        print("You have selected the option 1 | SEE YOUR WALLET")
+                        displayWallet(au)
+                    case 2:
+                        print("You have selected the option 2 | CHANGE BET RESULT")
+                        
+                    case 3:
+                        print("You have selected the option 3 | GO TO WALLET")
+                    case 4:
+                        print("Back to the main menu")
+                        return None
+            else:
+                print(f"The option must be between 1 - n\nTry again")
+        except ValueError:
+            print(f"The option must be a number\nTry again")
+
 
 #/////////////////////////////
 #MAIN MENU
@@ -605,18 +637,21 @@ def mainMenu(au):
     print(f"Welcome {au}")
     print(f"{'BET ANALYTICS MENU':-^60}")
     while True:
-        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. EXIT")
+        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. EXIT")
         try:
             menuOption = int(input("Choose between 1-n: "))
             if menuOption >0 or menuOption <4:
                 match menuOption:
                     case 1:
                         print("You have selected the option 1 | MAKE A BET")
-                        makeBet()
+                        makeBet(au)
                     case 2:
                         print("You have selected the option 2 | CHANGE BET RESULT")
-                        changeBetResult(activeUser)
+                        changeBetResult(au)
                     case 3:
+                        print("You have selected the option 3 | GO TO WALLET")
+                        walletMenu(au)
+                    case 4:
                         print("CLOSING...")
                         return None
             else:

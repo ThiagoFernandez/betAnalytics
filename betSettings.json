@@ -1,287 +1,573 @@
 {
-    "Sport": {
-        "Options": [
-            "Basketball",
-            "Football",
-            "Baseball",
-            "Tennis"
-        ],
-        "Detalle": {
-            "Basketball": {
-                "Competitions": {
-                    "NBA": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [
-                                    "Lakers",
-                                    "Wgs"
-                                ],
-                                "Markets": [
-                                    "1X2"
-                                ]
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    },
-                    "EuroLeague": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                },
-                "Leagues": {
-                    "League ACB": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    },
-                    "CBA": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                }
-            },
-            "Football": {
-                "Competitions": {
-                    "Champions League": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    },
-                    "Copa Libertadores": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                },
-                "Leagues": {
-                    "Premier League": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    },
-                    "La Liga": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                }
-            },
-            "Baseball": {
-                "Competitions": {
-                    "MLB": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                },
-                "Leagues": {
-                    "American League": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    },
-                    "National League": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                }
-            },
-            "Tennis": {
-                "Competitions": {
-                    "Wimbledon": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    },
-                    "US Open": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                },
-                "Leagues": {}
+  "Sport": {
+    "Options": [
+      "Basketball",
+      "Football",
+      "Baseball",
+      "Tennis"
+    ],
+    "Detalle": {
+      "Basketball": {
+        "Competitions": {
+          "NBA": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Los Angeles Lakers",
+                  "Golden State Warriors",
+                  "Boston Celtics",
+                  "Miami Heat"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Over/Under Points",
+                  "Handicap",
+                  "First to 20 Points"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "LeBron James",
+                  "Stephen Curry",
+                  "Jayson Tatum",
+                  "Jimmy Butler"
+                ],
+                "Markets": [
+                  "Points Over/Under",
+                  "Assists",
+                  "Rebounds",
+                  "3-Pointers Made"
+                ]
+              }
             }
-        }
-    },
-    "Esport": {
-        "Options": [
-            "CSGO",
-            "Valorant"
-        ],
-        "Detalle": {
-            "CSGO": {
-                "Competitions": {
-                    "Blast Premier": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    },
-                    "ESL Pro League": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                },
-                "Leagues": {}
-            },
-            "Valorant": {
-                "Competitions": {
-                    "VCT Masters": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                },
-                "Leagues": {
-                    "Liga Argentina de Valorant": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                }
+          },
+          "EuroLeague": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Real Madrid Basket",
+                  "FC Barcelona Basket",
+                  "Anadolu Efes",
+                  "Olympiacos"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Over/Under Total Points",
+                  "Winning Margin"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Sergio Llull",
+                  "Nikola Mirotic",
+                  "Vasilije Micić",
+                  "Jan Veselý"
+                ],
+                "Markets": [
+                  "Points Over/Under",
+                  "Rebounds",
+                  "Assists"
+                ]
+              }
             }
-        }
-    },
-    "Politics": {
-        "Options": [
-            "USA"
-        ],
-        "Detalle": {
-            "USA": {
-                "Competitions": {
-                    "Presidential Election": {
-                        "TeamsPlayers": {
-                            "Teams": {
-                                "List": [],
-                                "Markets": []
-                            },
-                            "Players": {
-                                "List": [],
-                                "Markets": []
-                            }
-                        }
-                    }
-                },
-                "Leagues": {}
+          }
+        },
+        "Leagues": {
+          "League ACB": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Real Madrid Basket",
+                  "Valencia Basket",
+                  "Unicaja Málaga",
+                  "Baskonia"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Total Points",
+                  "Handicap"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Rudy Fernández",
+                  "Dario Brizuela",
+                  "Markus Howard"
+                ],
+                "Markets": [
+                  "Points Over/Under",
+                  "Rebounds"
+                ]
+              }
             }
+          },
+          "CBA": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Guangdong Southern Tigers",
+                  "Beijing Ducks",
+                  "Liaoning Flying Leopards"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Handicap"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Yi Jianlian",
+                  "Zhou Qi",
+                  "Guo Ailun"
+                ],
+                "Markets": [
+                  "Points Over/Under",
+                  "Rebounds"
+                ]
+              }
+            }
+          }
         }
+      },
+      "Football": {
+        "Competitions": {
+          "Champions League": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Real Madrid",
+                  "Manchester City",
+                  "Bayern Munich",
+                  "Paris Saint-Germain"
+                ],
+                "Markets": [
+                  "1X2",
+                  "Over/Under 2.5 Goals",
+                  "Both Teams to Score",
+                  "Corners"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Erling Haaland",
+                  "Kylian Mbappé",
+                  "Vinícius Jr",
+                  "Harry Kane"
+                ],
+                "Markets": [
+                  "Anytime Goalscorer",
+                  "First Goalscorer",
+                  "Assists",
+                  "Cards"
+                ]
+              }
+            }
+          },
+          "Copa Libertadores": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Boca Juniors",
+                  "River Plate",
+                  "Palmeiras",
+                  "Flamengo"
+                ],
+                "Markets": [
+                  "1X2",
+                  "Over/Under 2.5 Goals",
+                  "Double Chance"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Edinson Cavani",
+                  "Gabigol",
+                  "Miguel Borja",
+                  "Dudu"
+                ],
+                "Markets": [
+                  "Anytime Goalscorer",
+                  "Yellow Card",
+                  "Assists"
+                ]
+              }
+            }
+          }
+        },
+        "Leagues": {
+          "Premier League": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Manchester United",
+                  "Liverpool",
+                  "Arsenal",
+                  "Chelsea"
+                ],
+                "Markets": [
+                  "1X2",
+                  "Both Teams to Score",
+                  "Over 2.5 Goals"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Mohamed Salah",
+                  "Bukayo Saka",
+                  "Marcus Rashford",
+                  "Cole Palmer"
+                ],
+                "Markets": [
+                  "Anytime Goalscorer",
+                  "Assists",
+                  "Cards"
+                ]
+              }
+            }
+          },
+          "La Liga": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "FC Barcelona",
+                  "Real Madrid",
+                  "Atlético de Madrid",
+                  "Sevilla"
+                ],
+                "Markets": [
+                  "1X2",
+                  "Over/Under 2.5 Goals",
+                  "Corners"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Robert Lewandowski",
+                  "Vinícius Jr",
+                  "Antoine Griezmann",
+                  "Isco"
+                ],
+                "Markets": [
+                  "Anytime Goalscorer",
+                  "Assists",
+                  "Cards"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "Baseball": {
+        "Competitions": {
+          "MLB": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "New York Yankees",
+                  "Los Angeles Dodgers",
+                  "Boston Red Sox",
+                  "Houston Astros"
+                ],
+                "Markets": [
+                  "Moneyline",
+                  "Total Runs",
+                  "Handicap"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Aaron Judge",
+                  "Shohei Ohtani",
+                  "Mookie Betts",
+                  "Jose Altuve"
+                ],
+                "Markets": [
+                  "Home Runs",
+                  "Hits",
+                  "Strikeouts"
+                ]
+              }
+            }
+          }
+        },
+        "Leagues": {
+          "American League": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "New York Yankees",
+                  "Houston Astros",
+                  "Seattle Mariners"
+                ],
+                "Markets": [
+                  "Moneyline",
+                  "Total Runs"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Shohei Ohtani",
+                  "Aaron Judge",
+                  "Julio Rodríguez"
+                ],
+                "Markets": [
+                  "Home Runs",
+                  "Strikeouts"
+                ]
+              }
+            }
+          },
+          "National League": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Los Angeles Dodgers",
+                  "Atlanta Braves",
+                  "Chicago Cubs"
+                ],
+                "Markets": [
+                  "Moneyline",
+                  "Total Runs"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Mookie Betts",
+                  "Ronald Acuña Jr",
+                  "Cody Bellinger"
+                ],
+                "Markets": [
+                  "Hits",
+                  "Runs Batted In"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "Tennis": {
+        "Competitions": {
+          "Wimbledon": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Bryan Brothers",
+                  "Dodig/Krajicek"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Total Sets",
+                  "Handicap Games"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Novak Djokovic",
+                  "Carlos Alcaraz",
+                  "Jannik Sinner"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Total Aces",
+                  "Double Faults"
+                ]
+              }
+            }
+          },
+          "US Open": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Sock/Pospisil",
+                  "Mektic/Pavic"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Total Sets"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Rafael Nadal",
+                  "Daniil Medvedev",
+                  "Alexander Zverev"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Total Aces"
+                ]
+              }
+            }
+          }
+        },
+        "Leagues": {}
+      }
     }
+  },
+  "Esport": {
+    "Options": [
+      "CSGO",
+      "Valorant"
+    ],
+    "Detalle": {
+      "CSGO": {
+        "Competitions": {
+          "Blast Premier": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Natus Vincere",
+                  "G2 Esports",
+                  "FaZe Clan",
+                  "Team Vitality"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Map Handicap",
+                  "Total Rounds"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "s1mple",
+                  "NiKo",
+                  "m0NESY",
+                  "ZywOo"
+                ],
+                "Markets": [
+                  "Most Kills",
+                  "First Kill",
+                  "MVP"
+                ]
+              }
+            }
+          },
+          "ESL Pro League": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Cloud9",
+                  "Heroic",
+                  "MOUZ"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Total Rounds"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Ax1Le",
+                  "jabbi",
+                  "frozen"
+                ],
+                "Markets": [
+                  "Most Kills",
+                  "Headshots"
+                ]
+              }
+            }
+          }
+        },
+        "Leagues": {}
+      },
+      "Valorant": {
+        "Competitions": {
+          "VCT Masters": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Fnatic",
+                  "LOUD",
+                  "Sentinels"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Rounds Handicap",
+                  "Over/Under Maps"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Derke",
+                  "TenZ",
+                  "Aspas"
+                ],
+                "Markets": [
+                  "Most Kills",
+                  "First Blood",
+                  "MVP of Match"
+                ]
+              }
+            }
+          }
+        },
+        "Leagues": {
+          "Liga Argentina de Valorant": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "KRÜ Esports",
+                  "Leviatán"
+                ],
+                "Markets": [
+                  "Match Winner",
+                  "Over/Under Maps"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Keznit",
+                  "Mazino"
+                ],
+                "Markets": [
+                  "Most Kills",
+                  "First Blood"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "Politics": {
+    "Options": [
+      "USA"
+    ],
+    "Detalle": {
+      "USA": {
+        "Competitions": {
+          "Presidential Election": {
+            "TeamsPlayers": {
+              "Teams": {
+                "List": [
+                  "Democratic Party",
+                  "Republican Party"
+                ],
+                "Markets": [
+                  "Party to Win",
+                  "Vote Percentage"
+                ]
+              },
+              "Players": {
+                "List": [
+                  "Joe Biden",
+                  "Donald Trump",
+                  "Kamala Harris",
+                  "Ron DeSantis"
+                ],
+                "Markets": [
+                  "Next President",
+                  "Debate Winner",
+                  "Approval Rating"
+                ]
+              }
+            }
+          }
+        },
+        "Leagues": {}
+      }
+    }
+  }
 }
