@@ -1,6 +1,6 @@
 {
     "Thiago": {
-        "wallet": 100000.0,
+        "wallet": 131000.0,
         "bets": {
             "Nuevoformatojijo": {
                 "betType": "Esport",
@@ -28,7 +28,7 @@
                 "betMarketResult": "2mapas",
                 "betAmount": 5000.0,
                 "betCuote": 2.1,
-                "betResult": "Win",
+                "betResult": "Loss",
                 "betTime": "2025-10-04"
             },
             "Probandoprofit": {

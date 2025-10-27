@@ -389,7 +389,12 @@ def validateBetAmount(): #STEP 8
     while True:
         try:
             amount = float(input("Write the bet amount: "))
-            return amount
+            if amount > data[activeUser]["wallet"]:
+                print(f"The amount typed is more than what you have in your wallet\nYour limit is:{data[activeUser]["wallet"]}")
+            elif amount <=0:
+                print("The amount cannot be 0 or less")
+            else:
+                return amount
         except ValueError:
             print("The amount must be a number | Try again ")
 
@@ -421,6 +426,8 @@ def validateBetResult(): #STEP 10
             print("The option must be a number | Try again")
 
 def validateBetProfit(a, c, r, au): #STEP 11
+    if "wallet" not in data[au]:
+        data[au]["wallet"] = 0
     if r == "Win":
         profit = a * c
         data[au]["wallet"] += profit - a
@@ -457,7 +464,7 @@ def saveBet(a, b, c, d, e, f, g, h, i, j, k, l): #STEP 12
         if betName not in betNamesList:
             currentTime = time.localtime()
             formattedTime = time.strftime("%Y-%m-%d", currentTime)
-            data[activeUser][betName] = {
+            data[activeUser]["bets"][betName] = {
                     "betType": a,
                     "betDiscipline": b,
                     "betFormat": c,
@@ -473,7 +480,7 @@ def saveBet(a, b, c, d, e, f, g, h, i, j, k, l): #STEP 12
                     "betTime": formattedTime
 
                 }
-            option=input(f"This is the result:\n{data[activeUser][betName]}\nDo you want to save it?\nyes or no: ").strip().lower()
+            option=input(f"This is the result:\n{data[activeUser]["bets"][betName]}\nDo you want to save it?\nyes or no: ").strip().lower()
             if option == "yes":
                 with open("./data.json", "w") as f:
                     json.dump(data, f, indent=4)
@@ -586,7 +593,8 @@ def changeBetResult(a):
                 newResult = validateBetResult()
                 data[a]["bets"][betName]["betResult"] = newResult
                 if data[a]["bets"][betName]["betResult"] == "Win":
-                    data[a]["bets"][betName]["betProfit"]= validateBetProfit(data[a]["bets"][betName]["betAmount"], data[a]["bets"][betName]["betCuote"], data[a]["bets"][betName]["betResult"])
+                    data[a]["bets"][betName]["betProfit"]= validateBetProfit(data[a]["bets"][betName]["betAmount"], data[a]["bets"][betName]["betCuote"], data[a]["bets"][betName]["betResult"], a)
+                    
                 print(f"Bet after the change:\n{data[a]["bets"][betName]}")
                 while True:
                     try:
