@@ -1,6 +1,6 @@
 {
     "Thiago": {
-        "wallet": 131000.0,
+        "wallet": 0,
         "bets": {
             "Nuevoformatojijo": {
                 "betType": "Esport",
@@ -13,7 +13,7 @@
                 "betMarketResult": "en 4 rondas",
                 "betAmount": 5000.0,
                 "betCuote": 1.7,
-                "betResult": "Loss",
+                "betResult": "CashOut",
                 "betTime": "2025-10-03",
                 "betProfit": 8500.0
             },
@@ -75,6 +75,36 @@
                 "betResult": "To Be Defined",
                 "betProfit": "TBD",
                 "betTime": "2025-10-20"
+            },
+            "Asdasdas": {
+                "betType": "Sport",
+                "betDiscipline": "Basketball",
+                "betFormat": "Competitions",
+                "betCompetitionLeague": "NBA",
+                "betTeamPlayer": "Players",
+                "betTeamPlayerOption": "3",
+                "betMarket": "Assists",
+                "betMarketResult": "+7.5",
+                "betAmount": 5000.0,
+                "betCuote": 1.7,
+                "betResult": "Win",
+                "betProfit": 8500.0,
+                "betTime": "2025-10-29"
+            },
+            "Probandobiden": {
+                "betType": "Politics",
+                "betDiscipline": "USA",
+                "betFormat": "Competitions",
+                "betCompetitionLeague": "Presidential Election",
+                "betTeamPlayer": "Teams",
+                "betTeamPlayerOption": "Republican Party",
+                "betMarket": "Vote Percentage",
+                "betMarketResult": "20%",
+                "betAmount": 0.5,
+                "betCuote": 1.2,
+                "betResult": "To Be Defined",
+                "betProfit": "TBD",
+                "betTime": "2025-10-29"
             }
         },
         "Probandorealmadrid": {

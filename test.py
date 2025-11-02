@@ -1,4 +1,4 @@
-import json, time
+import json, time, datetime
 
 #START
 try: # json with the bet history
@@ -23,7 +23,7 @@ except FileNotFoundError:
     settings = {
         "betTypeList": {
             "Sport": {"Options": {}, "Detalle":{}},
-            "Esport": {"Options": {},"Detalle":{} }
+            "Esport": {"Options": {},"Detalle":{} }, 
         }
     }
     with open("./betSettings.json", "w") as f:
@@ -590,11 +590,14 @@ def changeBetResult(a):
             else:
                 betName = lista[option-1]
                 # la sigo despues, me quede sin bateria
-                newResult = validateBetResult()
+                while True:
+                    newResult = validateBetResult()
+                    if newResult == data[a]["bets"][betName]["betResult"]:
+                        print("Cannot choose the same result | Choose another one")
+                    else:
+                        break
                 data[a]["bets"][betName]["betResult"] = newResult
-                if data[a]["bets"][betName]["betResult"] == "Win":
-                    data[a]["bets"][betName]["betProfit"]= validateBetProfit(data[a]["bets"][betName]["betAmount"], data[a]["bets"][betName]["betCuote"], data[a]["bets"][betName]["betResult"], a)
-                    
+                validateBetProfit(data[a]["bets"][betName]["betAmount"], data[a]["bets"][betName]["betCuote"], data[a]["bets"][betName]["betResult"], a)
                 print(f"Bet after the change:\n{data[a]["bets"][betName]}")
                 while True:
                     try:
@@ -614,30 +617,136 @@ def displayWallet(au):
     print(f"User: {au} - Money Available: {data[au]["wallet"]}")
     return None
 
+def addMoney(au):
+    while True:
+        print(f"How much money do you want to add?")
+        money = float(input("Write the amount: "))
+        if money <0:
+            print("You cannot add less than 0")
+        elif money ==0:
+            print("You cannot add 0")
+        else:
+            data[au]["wallet"] += money
+            with open("data.json", "w") as f:
+                json.dump(data, f, indent=4)
+            return
+
+def withdrawMoney(au):
+    while True:
+        print(f"How much money do you want to withdraw?")
+        money = float(input("Write the amount: "))
+        if money <0:
+            print("You cannot withdraw less than 0")
+        elif money ==0:
+            print("You cannot withdraw 0")
+        elif money > data[au]["wallet"]:
+            print(f"You cannot withdraw more money that you have\nYour limit is: {data[au]["wallet"]}")
+        else:
+            data[au]["wallet"] -= money
+            with open("data.json", "w") as f:
+                json.dump(data, f, indent=4)
+            return
 def walletMenu(au):
     print(f"{'WALLET MENU':-^60}")
     while True:
         print(f"1. SEE YOUR WALLET\n2. Add money\n3. Withdraw money\n4. Exit")
         try:
-            menuOption = int(input("Choose between 1-n: "))
-            if menuOption >0 or menuOption <4:
+            menuOption = int(input("Choose between 1-4: "))
+            if menuOption >0 or menuOption <=4:
                 match menuOption:
                     case 1:
                         print("You have selected the option 1 | SEE YOUR WALLET")
                         displayWallet(au)
                     case 2:
-                        print("You have selected the option 2 | CHANGE BET RESULT")
-                        
+                        print("You have selected the option 2 | ADD MONEY")
+                        addMoney(au)
                     case 3:
-                        print("You have selected the option 3 | GO TO WALLET")
+                        print("You have selected the option 3 | WITHDRAW MONEY")
+                        withdrawMoney(au)
                     case 4:
                         print("Back to the main menu")
                         return None
             else:
-                print(f"The option must be between 1 - n\nTry again")
+                print(f"The option must be between 1 - 4\nTry again")
         except ValueError:
             print(f"The option must be a number\nTry again")
 
+def seeAllBets(au):
+    names = list(data.get(au, {}).get("bets", {}).keys())
+    for i, name in enumerate(names, start=1):
+        print(f"{i}. {name}")
+    print(f"You made a total of {len(names)}")
+
+def filterBets(au):
+    names = list(data.get(au, {}).get("bets", {}).keys())
+    while True:
+        try:
+            startTimeYear = int(input("Write the start year: "))
+            startTimeMonth = int(input("Write the start month: "))
+            startTimeDay = int(input("Write the start day: "))
+            finalTimeYear = int(input("Write the final year: "))
+            finalTimeMonth = int(input("Write the final month: "))
+            finalTimeDay = int(input("Write the final day: "))
+        except ValueError:
+            print(" One of the date fields was not a number | Try again")
+            continue
+        try:
+            fechaPiso = datetime.date(startTimeYear, startTimeMonth, startTimeDay)
+            fechaPiso = datetime.date(startTimeYear, startTimeMonth, startTimeDay)
+            fechaTecho = datetime.date(finalTimeYear, finalTimeMonth, finalTimeDay)
+        except ValueError:
+            print("One of the date components is out of range | Try again")
+            continue
+        break
+    fechasFiltradas = []
+    for betName in names:
+        betTimeStr = data[au]["bets"][betName].get("betTime", "")
+        try:
+            betDate = datetime.datetime.strptime(betTimeStr, "%Y-%m-%d").date()
+        except Exception:
+            print(f"Error parsing date for bet {betName}, skipping...")
+            continue
+        if fechaPiso <= betDate <= fechaTecho:
+            bet = data[au]["bets"][betName]
+            fechasFiltradas.append({
+                                    "betName": betName,
+                                    "betDate": bet.get("betTime", "N/A"),
+                                    "betResult": bet.get("betResult", "N/A"),
+                                    "betProfit": bet.get("betProfit", "N/A")
+                                })
+        if fechasFiltradas:
+            print("Bets within the selected time range: ")
+            for bet in fechasFiltradas:
+                print(f"-{bet['betName']} | {bet['betDate']} | {bet['betResult']} | Profit: {bet['betProfit']}")
+        else:
+            print("No bets found in that time range")
+
+def betHistoryMenu(au):
+    print(f"{'BET HISTORY MENU':-^60}")
+    while True:
+        print(f"1. SEE ALL YOUR BETS\n2. FILTER BETS FOR X SPAN TIME\n3. DELETE A BET\n4. EXIT")
+        try:
+            menuOption = int(input("Choose between 1-4: "))
+            names = list(data.get(au, {}).get("bets", {}).keys())
+            if menuOption > 0 and menuOption <= 4:
+                match menuOption:
+                    case 1:
+                        print("You have selected the option 1 | SEE ALL YOUR BETS")
+                        seeAllBets(au)
+                    case 2:
+                        print("You have selected the option 2 | FILTER BETS FOR X SPAN TIME")
+                        filterBets(au)
+                    case 3:
+                        print("You have selected the option 3 | DELETE A BET")
+                        #deleteBet(au)
+                        #This is the next step to do, now I do not have time cuz Ive to study for an exam
+                    case 4:
+                        print("Back to the menu")
+                        return
+            else:
+                print("The option must be between 1-4\nTry again")
+        except ValueError:
+            print(f"The option must be a number\nTry again")
 
 #/////////////////////////////
 #MAIN MENU
@@ -645,7 +754,7 @@ def mainMenu(au):
     print(f"Welcome {au}")
     print(f"{'BET ANALYTICS MENU':-^60}")
     while True:
-        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. EXIT")
+        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. BET HISTORY\n5. EXIT")
         try:
             menuOption = int(input("Choose between 1-n: "))
             if menuOption >0 or menuOption <4:
@@ -660,6 +769,9 @@ def mainMenu(au):
                         print("You have selected the option 3 | GO TO WALLET")
                         walletMenu(au)
                     case 4:
+                        print("You have selected the option 4| BET HISTORY")
+                        betHistoryMenu(au)
+                    case 5:
                         print("CLOSING...")
                         return None
             else:
