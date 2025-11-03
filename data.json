@@ -29,7 +29,8 @@
                 "betAmount": 5000.0,
                 "betCuote": 2.1,
                 "betResult": "Loss",
-                "betTime": "2025-10-04"
+                "betTime": "2025-10-04",
+                "betProfit":4500.0
             },
             "Probandoprofit": {
                 "betType": "Esport",
@@ -89,21 +90,6 @@
                 "betCuote": 1.7,
                 "betResult": "Win",
                 "betProfit": 8500.0,
-                "betTime": "2025-10-29"
-            },
-            "Probandobiden": {
-                "betType": "Politics",
-                "betDiscipline": "USA",
-                "betFormat": "Competitions",
-                "betCompetitionLeague": "Presidential Election",
-                "betTeamPlayer": "Teams",
-                "betTeamPlayerOption": "Republican Party",
-                "betMarket": "Vote Percentage",
-                "betMarketResult": "20%",
-                "betAmount": 0.5,
-                "betCuote": 1.2,
-                "betResult": "To Be Defined",
-                "betProfit": "TBD",
                 "betTime": "2025-10-29"
             }
         },

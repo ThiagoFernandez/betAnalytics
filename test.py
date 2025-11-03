@@ -54,7 +54,10 @@ users = list(data.keys())
 if not users:
     newUser = input("Write your UserName: ").title().strip()
     activeUser = newUser
-    data[activeUser]={}
+    data[activeUser]={
+        "wallet": 0,
+        "bets": {}
+    }
     with open("./data.json", "w") as f:
         json.dump(data, f, indent=4)
 else:
@@ -68,7 +71,10 @@ else:
                 newUser = input("Write your UserName: ").title().strip()
                 if newUser not in users:
                     activeUser = newUser
-                    data[activeUser]={}
+                    data[activeUser]={
+                        "wallet": 0,
+                        "bets": {}
+                    }
                     with open("./data.json", "w") as f:
                         json.dump(data, f, indent=4)
                     break
@@ -721,6 +727,32 @@ def filterBets(au):
         else:
             print("No bets found in that time range")
 
+def deleteBet(au):
+    names = list(data[au]["bets"].keys())
+    for i, name in enumerate(names, start=1):
+        print(f"{i}. {name}")
+    while True:
+        try:
+            option = int(input(f"Choose an option between 1-{len(names)}: "))
+            if option > len(names) or option <=0:
+                print(f"The option must be between 1-{len(names)}\nTry again")
+            else:
+                betName = names[option-1]
+                confirm = input(f"Are you sure you want to delete the bet {betName}?\nyes or no: ").strip().lower()
+                if confirm == "yes":
+                    del data[au]["bets"][betName]
+                    with open("./data.json", "w") as f:
+                        json.dump(data, f, indent=4)
+                    print("Bet deleted")
+                    return None
+                else:
+                    print("Bet not deleted")
+                    return None
+        except ValueError:
+            print(f"The option must be a number\nTry again")
+            continue
+        
+
 def betHistoryMenu(au):
     print(f"{'BET HISTORY MENU':-^60}")
     while True:
@@ -738,7 +770,7 @@ def betHistoryMenu(au):
                         filterBets(au)
                     case 3:
                         print("You have selected the option 3 | DELETE A BET")
-                        #deleteBet(au)
+                        deleteBet(au)
                         #This is the next step to do, now I do not have time cuz Ive to study for an exam
                     case 4:
                         print("Back to the menu")
@@ -748,13 +780,56 @@ def betHistoryMenu(au):
         except ValueError:
             print(f"The option must be a number\nTry again")
 
+def statsProfit(au):
+    names = list(data[au]["bets"].keys())
+    total = 0
+    for name in names:
+        if data[au]["bets"][name]["betResult"] == "Win" or data[au]["bets"][name]["betResult"] == "Loss" or data[au]["bets"][name]["betResult"] == "CashOut":
+            total += data[au]["bets"][name]["betProfit"]
+    print(f"Profit: {total}")
+    
+def statsWinrate(au):
+    names = list(data[au]["bets"].keys())
+    apuestasDefinidas = 0
+    wins = 0
+    for name in names:
+        if data[au]["bets"][name]["betResult"] == "Win" or data[au]["bets"][name]["betResult"] == "Loss":
+            apuestasDefinidas+=1
+            if data[au]["bets"][name]["betResult"] == "Win":
+                wins+=1
+    winrate = (wins/apuestasDefinidas) * 100
+    print(f"Winrate: {winrate:.2f}%")
+    
+
+def betStatsMenu(au):
+    print(f"{'BET STATS MENU':-^60}")
+    while True:
+        try:
+            print(f"1. PROFIT\n2. WINRATE\n3. EXIT")
+            menuOption = int(input("Choose between 1-3: "))
+            if menuOption > 0 and menuOption <=3:
+                match menuOption:
+                    case 1:
+                        print("You have selected the option 1 | PROFIT")
+                        statsProfit(au)
+                    case 2:
+                        print("You have selected the option 2 | WINRATE")
+                        statsWinrate(au)
+                    case 3:
+                        print("Back to the menu")
+                        return
+            else:
+                print(f"The option must be between 1-3\nTry again")
+        except ValueError:
+            print(f"The option must be a number\nTry again")
+
 #/////////////////////////////
 #MAIN MENU
 def mainMenu(au):
     print(f"Welcome {au}")
     print(f"{'BET ANALYTICS MENU':-^60}")
     while True:
-        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. BET HISTORY\n5. EXIT")
+        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. BET HISTORY\n5. BET STATS\n6. EXIT")
         try:
             menuOption = int(input("Choose between 1-n: "))
             if menuOption >0 or menuOption <4:
@@ -772,6 +847,9 @@ def mainMenu(au):
                         print("You have selected the option 4| BET HISTORY")
                         betHistoryMenu(au)
                     case 5:
+                        print("You have selected the option 5 | BET STATS")
+                        betStatsMenu(au)
+                    case 6:
                         print("CLOSING...")
                         return None
             else:
