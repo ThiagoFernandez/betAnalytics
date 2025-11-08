@@ -1,4 +1,4 @@
-import json, time, datetime
+import json, time, datetime, random, shutil
 
 #START
 try: # json with the bet history
@@ -36,6 +36,17 @@ except json.JSONDecodeError:
             "Esport": {"Options": {},"Detalle":{} }
         }
     }
+
+def saveAll():
+    with open("data.json", "w") as f:
+        json.dump(data, f, indent=4)
+    with open("betSettings.json", "w") as f:
+        json.dump(settings, f, indent=4)
+    return None
+
+def backupData():
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    shutil.copy("./data.json", f"./backups/data_{timestamp}.json")
 
 #print(settings["Sport"])
 #opciones
@@ -787,7 +798,8 @@ def statsProfit(au):
         if data[au]["bets"][name]["betResult"] == "Win" or data[au]["bets"][name]["betResult"] == "Loss" or data[au]["bets"][name]["betResult"] == "CashOut":
             total += data[au]["bets"][name]["betProfit"]
     print(f"Profit: {total}")
-    
+    return total
+
 def statsWinrate(au):
     names = list(data[au]["bets"].keys())
     apuestasDefinidas = 0
@@ -801,13 +813,28 @@ def statsWinrate(au):
     print(f"Winrate: {winrate:.2f}%")
     
 
+def statsTotalInvested(au):
+    bets = list(data[au]["bets"].keys())
+    total = 0
+    for bet in bets:
+        total += data[au]["bets"][bet]["betAmount"]
+    print(f"You invested: {total} during {len(total)}")
+    return total
+
+def statsRoi(au):
+    profit = statsProfit(au)
+    amount = statsTotalInvested(au)
+    roi = ((profit-amount)/ amount) * 100
+    print(f"Your ROI is: {roi} ")
+    return None
+
 def betStatsMenu(au):
     print(f"{'BET STATS MENU':-^60}")
     while True:
         try:
-            print(f"1. PROFIT\n2. WINRATE\n3. EXIT")
+            print(f"1. PROFIT\n2. WINRATE\n3. TOTAL INVESTED\n4. ROI\n5. EXIT")
             menuOption = int(input("Choose between 1-3: "))
-            if menuOption > 0 and menuOption <=3:
+            if menuOption > 0 and menuOption <=5:
                 match menuOption:
                     case 1:
                         print("You have selected the option 1 | PROFIT")
@@ -816,6 +843,12 @@ def betStatsMenu(au):
                         print("You have selected the option 2 | WINRATE")
                         statsWinrate(au)
                     case 3:
+                        print("You have selected the option 3 | TOTAL INVESTED")
+                        statsTotalInvested(au)
+                    case 4:
+                        print("You have selected the option 4 | ROI")
+                        statsRoi(au)
+                    case 5:
                         print("Back to the menu")
                         return
             else:
@@ -823,16 +856,33 @@ def betStatsMenu(au):
         except ValueError:
             print(f"The option must be a number\nTry again")
 
+def betDecide():
+    print(f"Write your options so we can decide for you\nExamples(YES-NO-1-2)")
+    cont=0
+    options = []
+    while True:
+        cont+=1
+        print("EXIT to finish")
+        option = input(f"Option number {cont}: ").strip().lower()
+        if option == "exit":
+            break
+        else:
+            options.append(option)
+    index = random.randint(1, len(options))
+    result = options[index]
+    print(f"The result is: {result}\nBless you whigga")
+    return None
+
 #/////////////////////////////
 #MAIN MENU
 def mainMenu(au):
     print(f"Welcome {au}")
     print(f"{'BET ANALYTICS MENU':-^60}")
     while True:
-        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. BET HISTORY\n5. BET STATS\n6. EXIT")
+        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. BET HISTORY\n5. BET STATS\n6. BET DECIDE\n7. EXIT")
         try:
             menuOption = int(input("Choose between 1-n: "))
-            if menuOption >0 or menuOption <4:
+            if menuOption >0 and menuOption <=7:
                 match menuOption:
                     case 1:
                         print("You have selected the option 1 | MAKE A BET")
@@ -850,6 +900,11 @@ def mainMenu(au):
                         print("You have selected the option 5 | BET STATS")
                         betStatsMenu(au)
                     case 6:
+                        print("You have selected the option 6 | BET DECIDE")
+                        betDecide()
+                    case 7:
+                        saveAll()
+                        backupData()
                         print("CLOSING...")
                         return None
             else:
