@@ -1,6 +1,6 @@
 {
     "Thiago": {
-        "wallet": 0,
+        "wallet": 20021.4,
         "bets": {
             "Nuevoformatojijo": {
                 "betType": "Esport",
@@ -91,6 +91,51 @@
                 "betResult": "Win",
                 "betProfit": 8500.0,
                 "betTime": "2025-10-29"
+            },
+            "Probandosql": {
+                "betType": "Sport",
+                "betDiscipline": "Football",
+                "betFormat": "Leagues",
+                "betCompetitionLeague": "La Liga",
+                "betTeamPlayer": "Teams",
+                "betTeamPlayerOption": "Sevilla",
+                "betMarket": "1X2",
+                "betMarketResult": "1",
+                "betAmount": 5000.0,
+                "betCuote": 1.5,
+                "betResult": "Win",
+                "betProfit": 7500.0,
+                "betTime": "2025-11-30"
+            },
+            "Probandosql2": {
+                "betType": "Sport",
+                "betDiscipline": "Football",
+                "betFormat": "Leagues",
+                "betCompetitionLeague": "Premier League",
+                "betTeamPlayer": "Teams",
+                "betTeamPlayerOption": "Chelsea",
+                "betMarket": "1X2",
+                "betMarketResult": "1",
+                "betAmount": 5000.0,
+                "betCuote": 1.5,
+                "betResult": "Win",
+                "betProfit": 7500.0,
+                "betTime": "2025-11-30"
+            },
+            "Segunda Para Tantear": {
+                "betType": "Sport",
+                "betDiscipline": "Football",
+                "betFormat": "Leagues",
+                "betCompetitionLeague": "Premier League",
+                "betTeamPlayer": "Teams",
+                "betTeamPlayerOption": "Manchester United",
+                "betMarket": "1X2",
+                "betMarketResult": "2",
+                "betAmount": 10.0,
+                "betCuote": 3.3,
+                "betResult": "Win",
+                "betProfit": 33.0,
+                "betTime": "2025-12-01"
             }
         },
         "Probandorealmadrid": {
@@ -123,5 +168,9 @@
             "betProfit": 0,
             "betTime": "2025-10-21"
         }
+    },
+    "Renatta": {
+        "wallet": 0,
+        "bets": {}
     }
 }

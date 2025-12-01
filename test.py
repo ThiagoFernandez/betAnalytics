@@ -1,4 +1,5 @@
-import json, time, datetime, random, shutil, os
+import json, time, datetime, random, shutil, os, pyodbc
+from datetime import datetime
 
 #START
 try: # json with the bet history
@@ -37,6 +38,43 @@ except json.JSONDecodeError:
         }
     }
 
+with open("../config.json", "r") as f:
+    config = json.load(f)
+
+
+with open("../config.json", "r") as f:
+    config = json.load(f)
+
+def getConnection():
+    try:
+        connectionStart = (
+            f"DRIVER={{SQL Server}};"
+            f"SERVER={config['server']};"
+            f"DATABASE={config['database']};"
+            f"Trusted_Connection={config['trusted_connection']};"
+        )
+        return pyodbc.connect(connectionStart)
+    except pyodbc.Error as e:
+        print(f"Database connection error: {e}")
+        return None
+
+
+
+def test_connection():
+    try:
+        conn = getConnection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT @@VERSION")
+        row = cursor.fetchone()
+        print("Connection successful!")
+        print("SQL Server version:", row[0])
+        conn.close()
+    except Exception as e:
+        print("Connection failed:", e)
+
+test_connection()
+
+
 def saveAll():
     with open("data.json", "w") as f:
         json.dump(data, f, indent=4)
@@ -65,6 +103,22 @@ def backupData():
 #competiciones o liga
 #print(settings["Sport"]["Detalle"]["Basketball"]["Leagues"])
 #print(settings["Sport"]["Detalle"]["Basketball"]["Competitions"])
+def createUserSQL(newUser):
+    try:
+        conn = getConnection()
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO Users (UserName, Wallet)
+            VALUES (?, 0.0)
+            """,(newUser,)
+            )
+        conn.commit()
+        conn.close()
+        print(f"The user was created succesfully")
+    except Exception as e:
+        print(f"Error creating a new user in SQL: {e}")
+    return None
 
 users = list(data.keys())
 if not users:
@@ -76,6 +130,7 @@ if not users:
     }
     with open("./data.json", "w") as f:
         json.dump(data, f, indent=4)
+    createUserSQL(newUser)
 else:
     for i, items in enumerate(users, start=1):
         print(f"{i}. {items}")
@@ -93,6 +148,7 @@ else:
                     }
                     with open("./data.json", "w") as f:
                         json.dump(data, f, indent=4)
+                    createUserSQL(newUser)
                     break
                 else:
                     print(f"{newUser} is already an user")
@@ -507,11 +563,169 @@ def saveBet(a, b, c, d, e, f, g, h, i, j, k, l): #STEP 12
                 with open("./data.json", "w") as f:
                     json.dump(data, f, indent=4)
                 print("Bet saved")
+                updateWalletSQL(a)
                 return None
             else:
                 return None
         else:
             print(f"That name already exist\nTry again")
+
+# SQL save
+
+def saveBetSQL(a, b, c, d, e, f, g, h, i, j, k, l, au):
+    try:
+        conn = getConnection()
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT UserID FROM Users WHERE UserName = ?", (au,))
+        row = cursor.fetchone()
+        if not row:
+            cursor.execute("INSERT INTO Users (UserName, Wallet) VALUES (?, ?)", (au, float(data[au]["wallet"])))
+            conn.commit()
+            cursor.execute("SELECT UserID FROM Users WHERE UserName = ?", (au,))
+            row = cursor.fetchone()
+
+        user_id = row[0]
+        bet_name = list(data[au]["bets"].keys())[-1]
+        bet_profit = float(data[au]["bets"][bet_name]["betProfit"]) if isinstance(data[au]["bets"][bet_name]["betProfit"], (int, float)) else 0.0
+        bet_date = datetime.now().strftime("%Y-%m-%d")
+
+        print("DEBUG ORDER CHECK:")
+        print(user_id, bet_name, a, b, c, d, e, f, g, h, i, j, k, bet_profit, bet_date)
+
+        cursor.execute("""
+            INSERT INTO Bets (
+                UserID, BetName, BetType, BetDiscipline, BetFormat,
+                BetCompetitionLeague, BetTeamPlayer, BetTeamPlayerOption,
+                BetMarket, BetMarketResult, BetAmount, BetCuote,
+                BetResult, BetProfit, BetTime
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            int(user_id),
+            str(bet_name),
+            str(a),
+            str(b),
+            str(c),
+            str(d),
+            str(e),
+            str(f),
+            str(g),
+            str(h),
+            float(i),
+            float(j),
+            str(k),
+            float(bet_profit),
+            bet_date
+        ))
+
+        conn.commit()
+        conn.close()
+        print("Bet saved successfully in SQL Server")
+
+    except Exception as e:
+        print(f"Error saving bet in SQL: {e}")
+
+def readBetsSQL(au, orderBy="recent"):
+    try:
+        conn = getConnection()
+        cursor = conn.cursor()
+
+        orderOptions = {
+            "recent": "BetTime DESC",
+            "oldest": "B.BetTime ASC",
+            "highestProfit": "B.BetProfit DESC",
+            "highestBet": "B.BetAmount DESC"
+        }
+
+        orderClause = orderOptions.get(orderBy, "B.BetTime DESC")
+
+        query = f"""
+            SELECT 
+                U.UserName,
+                B.BetName,
+                B.BetType,
+                B.BetDiscipline,
+                B.BetFormat,
+                B.BetCompetitionLeague,
+                B.BetTeamPlayerOption,
+                B.BetMarket,
+                B.BetAmount,
+                B.BetCuote,
+                B.BetResult,
+                B.BetProfit,
+                B.BetTime
+            FROM Bets AS B
+            INNER JOIN Users AS U ON B.UserID = U.UserID
+            WHERE U.UserName = ?
+            ORDER BY {orderClause};
+            """
+        cursor.execute(query, (au,))
+        rows = cursor.fetchall()
+        if not rows:
+            print(f"No bets found for {au}")
+        else:
+            print(f"\n{'='*20} BETS OF {au} {'='*20}")
+            for row in rows:
+                print(f"{row.BetName} | {row.BetType} | {row.BetDiscipline} | {row.BetFormat} | {row.BetCompetitionLeague} | {row.BetTeamPlayerOption} | {row.BetMarket} | {row.BetAmount} | {row.BetCuote} |{row.BetResult} | Profit: {row.BetProfit} | Date: {row.BetTime}")
+            conn.close()
+            return None
+    except Exception as e:
+        print(f"Error reading from SQL: {e}")
+        return None
+
+def filterBetsSQL(au, start, end):
+    try:
+        conn = getConnection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT 
+                B.BetName, B.BetDiscipline, B.BetResult, B.BetProfit, B.BetTime
+            FROM Bets AS B
+            INNER JOIN Users AS U ON B.UserID = U.UserID
+            WHERE U.UserName = ?
+            AND B.BetTime BETWEEN ? AND ?
+            ORDER BY B.BetTime DESC
+        """, (au, start, end))
+        rows = cursor.fetchall()
+        if not rows:
+            print(f"No bets found between {start} and {end}")
+        else:
+            print(f"Bets from {start} to {end}: ")
+            for row in rows:
+                 print(f"- {row.BetName} | {row.BetDiscipline} | {row.BetResult} | {row.BetProfit} | {row.BetTime}")
+            conn.close()
+            return None
+    except Exception as e:
+        print(f"Error filtering bets from SQL: {e}")
+
+def statsSQL(au):
+    try:
+        conn = getConnection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT 
+                COUNT(*) AS TotalBets,
+                SUM(CASE WHEN BetResult='Win' THEN 1 ELSE 0 END) AS Wins,
+                SUM(CASE WHEN BetResult='Loss' THEN 1 ELSE 0 END) AS Losses,
+                SUM(BetAmount) AS TotalInvested,
+                SUM(BetProfit) AS TotalProfit
+            FROM Bets AS B
+            INNER JOIN Users AS U ON B.UserID = U.UserID
+            WHERE U.UserName = ?
+        """, (au,))
+        row = cursor.fetchone()
+        if row:
+            winrate = (row.Wins / (row.Wins + row.Losses)) * 100 if (row.Wins + row.Losses) > 0 else 0
+            roi = ((row.TotalProfit - row.TotalInvested) / row.TotalInvested) * 100 if row.TotalInvested > 0 else 0
+            print(f"\nStats for {au}")
+            print(f"Total Bets: {row.TotalBets}")
+            print(f"Wins: {row.Wins} | Losses: {row.Losses}")
+            print(f"Winrate: {winrate:.2f}%")
+            print(f"Total Profit: {row.TotalProfit}")
+            print(f"ROI: {roi:.2f}%")
+        conn.close()
+    except Exception as e:
+        print(f"Error generating stats from SQL: {e}")
 
 #/////////////////////////////////////////
 #MAIN OPTIONS
@@ -594,6 +808,7 @@ def makeBet(au): #OPTION 1
     print(f"{'VALIDATE THE BET MENU':-^60}")
     saveBet(betType, betDiscipline, betFormat, betCompetitionLeague, betTeamPlayer ,betTeamPlayerListOption, betMarket, betMarketResult, betAmount, betCuote, betResult, betProfit)
 
+    saveBetSQL(betType, betDiscipline, betFormat, betCompetitionLeague, betTeamPlayer ,betTeamPlayerListOption, betMarket, betMarketResult, betAmount, betCuote, betResult, betProfit, au)
 
 def changeBetResult(a):
     lista = list(data[a]["bets"].keys())
@@ -627,6 +842,7 @@ def changeBetResult(a):
                         if yesno == "yes":
                             with open("./data.json", "w") as f:
                                 json.dump(data, f, indent=4)
+                                updateWalletSQL(a)
                             return None
                         else:
                             return None
@@ -668,6 +884,25 @@ def withdrawMoney(au):
             with open("data.json", "w") as f:
                 json.dump(data, f, indent=4)
             return
+        
+def updateWalletSQL(au):
+    walletJson = data[au]["wallet"]
+    try:
+        conn = getConnection()
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            UPDATE Users 
+            SET Wallet = ?
+            WHERE UserName = ?
+            """, (walletJson, au))
+        conn.commit()
+        conn.close()
+        print(f"Wallet was updated succesfully")
+    except Exception as e:
+        print(f"Error updating the wallet in SQL: {e}")
+    return None
+
 def walletMenu(au):
     print(f"{'WALLET MENU':-^60}")
     while True:
@@ -682,9 +917,11 @@ def walletMenu(au):
                     case 2:
                         print("You have selected the option 2 | ADD MONEY")
                         addMoney(au)
+                        updateWalletSQL(au)
                     case 3:
                         print("You have selected the option 3 | WITHDRAW MONEY")
                         withdrawMoney(au)
+                        updateWalletSQL(au)
                     case 4:
                         print("Back to the main menu")
                         return None
@@ -796,6 +1033,51 @@ def betHistoryMenu(au):
         except ValueError:
             print(f"The option must be a number\nTry again")
 
+def betHistoryMenuSQL(au):
+    print(f"{'BET HISTORY MENU (SQL)':-^60}")
+    while True:
+        print(f"1. READ ALL YOUR BETS\n2. FILTER BETS FOR X SPAN TIME\n3. DELETE A BET\n4. EXIT")
+        try:
+            menuOption = int(input("Choose between 1-4: "))
+            if menuOption > 0 and menuOption <= 4:
+                match menuOption:
+                    case 1:
+                        print("You have selected the option 1 | SEE ALL YOUR BETS")
+                        while True:
+                            print(f"1. SEE ALL (Most recent)\n2. SEE OLDEST FIRST\n3. SEE BY HIGHEST PROFIT\n4. SEE BY HIGHEST BET AMOUNT\n5. EXIT")
+                            try:
+                                option = int(input("Choose: "))
+                                match option:
+                                    case 1:
+                                        readBetsSQL(au, "recent")
+                                    case 2:
+                                        readBetsSQL(au, "oldest")
+                                    case 3:
+                                        readBetsSQL(au, "highestProfit")
+                                    case 4:
+                                        readBetsSQL(au, "highestBet")
+                                    case 5:
+                                        break
+                            except ValueError:
+                                print("Option must be a number | Try again")
+                            
+                    case 2:
+                        print("You have selected the option 2 | FILTER BETS FOR X SPAN TIME")
+                        start = input("Start date (YYYY-MM-DD)")
+                        end = input("End date (YYYY-MM-DD)")
+                        filterBetsSQL(au, start, end)
+                    case 3:
+                        print("You have selected the option 3 | DELETE A BET")
+                        #deleteBetSQL(au)
+                    case 4:
+                        print("Back to the menu")
+                        return
+            else:
+                print("The option must be between 1-4\nTry again")
+        except ValueError:
+            print(f"The option must be a number\nTry again")
+
+
 def statsProfit(au):
     names = list(data[au]["bets"].keys())
     total = 0
@@ -855,14 +1137,47 @@ def statsByDiscipline(au):
     print(f"These are your discipline stats: {stats}")
     return print("Back to the stats menu")
 
+def statsByDisciplineSQL(au):
+    try:
+        conn = getConnection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT 
+                B.BetDiscipline,
+                COUNT(*) AS TotalBets,
+                SUM(CASE WHEN BetResult='Win' THEN 1 ELSE 0 END) AS Wins,
+                SUM(CASE WHEN BetResult='Loss' THEN 1 ELSE 0 END) AS Losses,
+                SUM(BetAmount) AS TotalInvested,
+                SUM(BetProfit) AS TotalProfit
+            FROM Bets AS B
+            INNER JOIN Users AS U ON B.UserID = U.UserID
+            WHERE U.UserName = ?
+            GROUP BY B.BetDiscipline
+            ORDER BY TotalBets DESC
+        """, (au,))
+        rows = cursor.fetchall()
+        if not rows:
+            print(f"No bets found for {au}")
+        else:
+            for r in rows:
+                total = r.TotalBets
+                wins = r.Wins
+                losses = r.Losses
+                winrate = (wins / (wins + losses)) * 100 if (wins + losses) > 0 else 0
+                roi = ((r.TotalProfit - r.TotalInvested) / r.TotalInvested) * 100 if r.TotalInvested > 0 else 0
+                print(f"{r.BetDiscipline}: {winrate:.2f}% winrate | ROI: {roi:.2f}% | Profit: {r.TotalProfit}")
+        conn.close()
+    except Exception as e:
+        print(f"Error generating stats by discipline: {e}")
+
 
 def betStatsMenu(au):
     print(f"{'BET STATS MENU':-^60}")
     while True:
         try:
-            print(f"1. PROFIT\n2. WINRATE\n3. TOTAL INVESTED\n4. ROI\n5. STATS BY DISCIPLINE\n6. EXIT")
-            menuOption = int(input("Choose between 1-6: "))
-            if menuOption > 0 and menuOption <=6:
+            print(f"1. PROFIT\n2. WINRATE\n3. TOTAL INVESTED\n4. ROI\n5. STATS BY DISCIPLINE\n6. STATS SQL\n7. STATS BY DISCIPLINE SQL\n8. EXIT")
+            menuOption = int(input("Choose between 1-8: "))
+            if menuOption > 0 and menuOption <=8:
                 match menuOption:
                     case 1:
                         print("You have selected the option 1 | PROFIT")
@@ -880,6 +1195,12 @@ def betStatsMenu(au):
                         print("You have selected the option 5 | STATS BY DISCIPLINE")
                         statsByDiscipline(au)
                     case 6:
+                        print("You have selected the option 6 | STATS SQL")
+                        statsSQL(au)
+                    case 7: 
+                        print("You have selected the option 7 | STATS BY DISCIPLINE SQL")
+                        statsByDisciplineSQL(au)
+                    case 8:
                         print("Back to the menu")
                         return
             else:
@@ -904,7 +1225,67 @@ def betDecide():
     print(f"The result is: {result}\nBless you whigga")
     return None
 
-def resultPredict():
+def predictWinProbability(au, discipline, cuote):
+    bets = data[au]["bets"]
+    total = 0
+    wins = 0
+
+    for bet in bets.values():
+        if bet["betDiscipline"] == discipline and bet["betResult"] in ["Win", "Loss"]:
+            total += 1
+            if bet["betResult"] == "Win":
+                wins += 1
+
+    if total == 0:
+        base_winrate = 50
+    else:
+        base_winrate = (wins / total) * 100
+
+    if cuote > 2.0:
+        base_winrate -= (cuote - 2.0) * 10
+    elif cuote < 1.5:
+        base_winrate += (1.5 - cuote) * 10
+
+    base_winrate = max(5, min(base_winrate, 95))
+
+    return base_winrate
+
+def resultPredict(au):
+    print(f"{'RESULT PREDICTOR':-^60}")
+    print("Estimate your chance of winning based on your historical data.\n")
+
+    bets = data[au]["bets"]
+    disciplines = []
+    for bet in bets.values():
+        if bet["betDiscipline"] not in disciplines:
+            disciplines.append(bet["betDiscipline"])
+    while True:
+        try:
+            for i in range(len(disciplines)):
+                print(f"{i+1}. {disciplines[i]}")
+            option = int(input("Choose a discipline: ")) 
+            discipline = disciplines[option-1]
+            break
+        except ValueError:
+            print("The option must be a number | Try again")
+    while True:
+        try:
+            cuote = float(input("Enter the betting cuote: "))
+            break
+        except ValueError:
+            print("The cuote must be a number.")
+        
+    win_prob = predictWinProbability(au, discipline, cuote)
+
+    print(f"\nPredicted Win Probability for {discipline}: {win_prob:.2f}%")
+
+    simulate = input("Do you want to simulate the outcome with this probability? (yes/no): ").lower().strip()
+    if simulate == "yes":
+        result = random.choices(["Win", "Loss"], weights=[win_prob, 100 - win_prob])[0]
+        print(f"Simulated Result: {result}")
+    else:
+        print("No simulation performed.")
+
     return None
 
 #/////////////////////////////
@@ -913,10 +1294,10 @@ def mainMenu(au):
     print(f"Welcome {au}")
     print(f"{'BET ANALYTICS MENU':-^60}")
     while True:
-        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. BET HISTORY\n5. BET STATS\n6. BET DECIDE\n7. RESULT PREDICT\n8. EXIT")
+        print(f"1. MAKE A BET\n2. CHANGE BET RESULT\n3. GO TO WALLET\n4. BET HISTORY\n5. BET HISTORY SQL\n6. BET STATS\n7. BET DECIDE\n8. RESULT PREDICT\n9. EXIT")
         try:
-            menuOption = int(input("Choose between 1-n: "))
-            if menuOption >0 and menuOption <=8:
+            menuOption = int(input("Choose between 1-9: "))
+            if menuOption >0 and menuOption <=9:
                 match menuOption:
                     case 1:
                         print("You have selected the option 1 | MAKE A BET")
@@ -931,21 +1312,24 @@ def mainMenu(au):
                         print("You have selected the option 4| BET HISTORY")
                         betHistoryMenu(au)
                     case 5:
-                        print("You have selected the option 5 | BET STATS")
-                        betStatsMenu(au)
+                        print("You have selected the option 5 | BET HISTORY SQL")
+                        betHistoryMenuSQL(au)
                     case 6:
-                        print("You have selected the option 6 | BET DECIDE")
-                        betDecide()
+                        print("You have selected the option 6 | BET STATS")
+                        betStatsMenu(au)
                     case 7:
-                        print("You have selected the option 7 | RESULT PREDICT")
-                        resultPredict(au)
+                        print("You have selected the option 7 | BET DECIDE")
+                        betDecide()
                     case 8:
+                        print("You have selected the option 8 | RESULT PREDICT")
+                        resultPredict(au)
+                    case 9:
                         saveAll()
                         backupData()
                         print("CLOSING...")
                         return None
             else:
-                print(f"The option must be between 1 - n\nTry again")
+                print(f"The option must be between 1 - 9\nTry again")
         except ValueError:
             print(f"The option must be a number\nTry again")
 
